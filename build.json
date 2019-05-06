@@ -1,6 +1,6 @@
 {
   "variables": {
-    "prefix": "mbeham"
+    "prefix": "zaljic"
   },
   "builders": [{
     "type": "amazon-ebs",
