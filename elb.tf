@@ -4,8 +4,8 @@ data "aws_route53_zone" "main" {
 
 # Create a new load balancer
 resource "aws_elb" "nodejs_demo" {
-  count              = "${var.loadbalancer_count}"
-  name               = "${var.prefix}-nodejs-elb"
+  count = "${var.loadbalancer_count}"
+  name  = "${var.prefix}-nodejs-elb"
 
   listener {
     instance_port     = 8080
@@ -15,10 +15,10 @@ resource "aws_elb" "nodejs_demo" {
   }
 
   listener {
-    instance_port     = 8080
-    instance_protocol = "http"
-    lb_port           = 443
-    lb_protocol       = "https"
+    instance_port      = 8080
+    instance_protocol  = "http"
+    lb_port            = 443
+    lb_protocol        = "https"
     ssl_certificate_id = "${var.certificate_arn}"
   }
 
@@ -36,7 +36,7 @@ resource "aws_elb" "nodejs_demo" {
   connection_draining         = true
   connection_draining_timeout = 400
 
-  subnets = ["${aws_subnet.public.*.id}"]
+  subnets         = ["${aws_subnet.public.*.id}"]
   security_groups = ["${aws_security_group.elb.id}"]
 
   tags = {
@@ -74,14 +74,14 @@ resource "aws_security_group" "elb" {
 }
 
 resource "aws_route53_record" "www" {
-  count = "${var.loadbalancer_count}"
+  count   = "${var.loadbalancer_count}"
   zone_id = "${data.aws_route53_zone.main.zone_id}"
   name    = "${var.prefix}-${count.index + 1}"
-  type = "A"
+  type    = "A"
 
   alias {
-    name = "${aws_elb.nodejs_demo.dns_name}"
-    zone_id = "${aws_elb.nodejs_demo.zone_id}"
+    name                   = "${aws_elb.nodejs_demo.dns_name}"
+    zone_id                = "${aws_elb.nodejs_demo.zone_id}"
     evaluate_target_health = true
   }
 }

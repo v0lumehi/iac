@@ -39,7 +39,7 @@ runcmd:
   - [ systemctl, start, --no-block, hello.service ]
 EOT
 
-  subnet_id                   = "${element(aws_subnet.private.*.id, count.index)}"
+  subnet_id = "${element(aws_subnet.private.*.id, count.index)}"
 
   key_name = "${var.prefix}"
 
@@ -56,9 +56,9 @@ resource "aws_security_group" "nodejs_rds_demo_instance" {
   vpc_id = "${aws_vpc.vpc.id}"
 
   ingress {
-    from_port   = 8080
-    to_port     = 8080
-    protocol    = "tcp"
+    from_port       = 8080
+    to_port         = 8080
+    protocol        = "tcp"
     security_groups = ["${aws_security_group.elb.id}"]
   }
 
