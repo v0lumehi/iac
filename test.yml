@@ -1,0 +1,19 @@
+#cloud-config
+preserve_hostname: false
+manage_etc_hosts: true
+hostname: nodejs-rds-demo-1
+fqdn: nodejs-rds-demo-1
+write-files:
+  - content: |
+      "DB_HOST="zaljic-nodejs-db.czpwsezkoyxl.eu-west-1.rds.amazonaws.com"
+DB_DB="mydb"
+DB_USER="test"
+DB_PASS="testtest"
+"
+    owner: ubuntu:ubuntu
+    path: /etc/nodejs.env
+    permissions: '0644'
+runcmd:
+  - [ systemctl, daemon-reload ]
+  - [ systemctl, enable, hello.service ]
+  - [ systemctl, start, --no-block, hello.service ]

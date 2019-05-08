@@ -5,7 +5,7 @@ resource "aws_security_group" "nodejs_rds_demo_db" {
     from_port = 3306
     to_port = 3306
     protocol = "tcp"
-    cidr_blocks = ["${aws_subnet.public.*.cidr_block}"]
+    security_groups = ["${aws_security_group.nodejs_rds_demo_instance.id}"]
   }
 
   egress {
@@ -25,7 +25,7 @@ resource "aws_db_subnet_group" "nodejs_db" {
   subnet_ids = ["${aws_subnet.private.*.id}"]
 
   tags = {
-    Name = "${var.prefix} DB subnet group"
+    Name = "${var.prefix}-db-subnet-group"
   }
 }
 

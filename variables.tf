@@ -13,9 +13,17 @@ variable "dns_zone" {
 }
 
 variable "host_count" {
+  default = 3
+}
+
+variable "loadbalancer_count" {
   default = 1
 }
 
 variable "ssh_private_key" {
   default = "/Users/zaljic/.ssh/id_rsa"
+}
+
+variable "certificate_arn" {
+  default = "arn:aws:acm:eu-west-1:287283636362:certificate/313ef381-b7c9-4e81-a6ab-e19ab4ec8106"
 }
