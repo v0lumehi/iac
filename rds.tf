@@ -30,7 +30,7 @@ resource "aws_db_subnet_group" "nodejs_db" {
 }
 
 resource "aws_db_instance" "nodejs_db" {
-  skip_final_snapshot = true
+  skip_final_snapshot  = true
   allocated_storage    = 20
   storage_type         = "gp2"
   engine               = "mysql"
@@ -40,7 +40,7 @@ resource "aws_db_instance" "nodejs_db" {
   username             = "test"
   password             = "testtest"
   parameter_group_name = "default.mysql5.7"
-  identifier = "${var.prefix}-nodejs-db"
+  identifier           = "${var.prefix}-nodejs-db"
   db_subnet_group_name = "${aws_db_subnet_group.nodejs_db.name}"
   vpc_security_group_ids = ["${aws_security_group.nodejs_rds_demo_db.id}"]
 }

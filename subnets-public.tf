@@ -3,8 +3,8 @@
 resource "aws_subnet" "public" {
   count = 3
 
-  cidr_block = "${cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index )}"
-  vpc_id = "${aws_vpc.vpc.id}"
+  cidr_block        = "${cidrsubnet(aws_vpc.vpc.cidr_block, 8, count.index )}"
+  vpc_id            = "${aws_vpc.vpc.id}"
   availability_zone = "${element(var.azs, count.index)}"
 
   tags {
@@ -29,14 +29,15 @@ resource "aws_route_table" "public" {
 
 // Attach the public subnets to the public route table
 resource "aws_route_table_association" "public" {
-  count = "${length(var.azs)}"
+  count          = "${length(var.azs)}"
   route_table_id = "${aws_route_table.public.id}"
-  subnet_id = "${element(aws_subnet.public.*.id, count.index)}"
+  subnet_id      = "${element(aws_subnet.public.*.id, count.index)}"
 }
 
 // Create a Internet Gateway (needed for useing public IPs in EC2)
 resource "aws_internet_gateway" "public" {
   vpc_id = "${aws_vpc.vpc.id}"
+
   tags {
     Name = "${var.prefix}-igw"
   }

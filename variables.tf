@@ -1,15 +1,15 @@
-
 variable "prefix" {
   default = "zaljic"
 }
+
 variable "azs" {
-  type = "list"
+  type    = "list"
   default = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
 }
 
 variable "dns_zone" {
   description = "iac training dns zone"
-  default = "iac.trainings.jambit.de."
+  default     = "iac.trainings.jambit.de."
 }
 
 variable "host_count" {
